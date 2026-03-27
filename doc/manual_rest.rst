@@ -78,6 +78,7 @@ Usage help is available:
       -r, --repo repository            repository to backup to or restore from (default: $RESTIC_REPOSITORY)
           --repository-file file       file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)
           --retry-lock duration        retry to lock the repository if it is already locked, takes a value like 5m or 2h (default: no retries)
+          --retry-timeout duration     retry operation timeout
           --tls-client-cert file       path to a file containing PEM encoded TLS client certificate and private key (default: $RESTIC_TLS_CLIENT_CERT)
       -v, --verbose                    be verbose (specify multiple times or a level using --verbose=n, max level/times is 2)
 
@@ -160,6 +161,7 @@ command:
       -r, --repo repository            repository to backup to or restore from (default: $RESTIC_REPOSITORY)
           --repository-file file       file to read the repository location from (default: $RESTIC_REPOSITORY_FILE)
           --retry-lock duration        retry to lock the repository if it is already locked, takes a value like 5m or 2h (default: no retries)
+          --retry-timeout duration     retry operation timeout
           --tls-client-cert file       path to a file containing PEM encoded TLS client certificate and private key (default: $RESTIC_TLS_CLIENT_CERT)
       -v, --verbose                    be verbose (specify multiple times or a level using --verbose=n, max level/times is 2)
 

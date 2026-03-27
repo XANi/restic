@@ -61,6 +61,7 @@ type Options struct {
 	PackSize           uint
 	NoExtraVerify      bool
 	InsecureNoPassword bool
+	RetryTimeout       time.Duration
 
 	backend.TransportOptions
 	limiter.Limits
@@ -97,6 +98,7 @@ func (opts *Options) AddFlags(f *pflag.FlagSet) {
 	f.CountVarP(&opts.Verbose, "verbose", "v", "be verbose (specify multiple times or a level using --verbose=n``, max level/times is 2)")
 	f.BoolVar(&opts.NoLock, "no-lock", false, "do not lock the repository, this allows some operations on read-only repositories")
 	f.DurationVar(&opts.RetryLock, "retry-lock", 0, "retry to lock the repository if it is already locked, takes a value like 5m or 2h (default: no retries)")
+	f.DurationVar(&opts.RetryTimeout, "retry-timeout", 15*time.Minute, "retry operation timeout")
 	f.BoolVarP(&opts.JSON, "json", "", false, "set output mode to JSON for commands that support it")
 	f.StringVar(&opts.CacheDir, "cache-dir", "", "set the cache `directory`. (default: use system default cache directory)")
 	f.BoolVar(&opts.NoCache, "no-cache", false, "do not use a local cache")
@@ -608,7 +610,8 @@ func wrapBackend(be backend.Backend, gopts Options, printer progress.Printer) (b
 	success := func(msg string, retries int) {
 		printer.E("%v operation successful after %d retries", msg, retries)
 	}
-	be = retry.New(be, 15*time.Minute, report, success)
+
+	be = retry.New(be, gopts.RetryTimeout, report, success)
 
 	// wrap backend if a test specified a hook
 	if gopts.BackendTestHook != nil {
