@@ -27,7 +27,7 @@ output from oldest to youngest specify --reverse.
 
 .PP
 \fB-H\fP, \fB--host\fP=[]
-	only consider snapshots for this \fBhost\fR (can be specified multiple times) (default: $RESTIC_HOST)
+	only consider snapshots for this \fBhost\fR (can be specified multiple times, use empty string to unset default value) (default: $RESTIC_HOST)
 
 .PP
 \fB--human-readable\fP[=false]
@@ -92,7 +92,7 @@ output from oldest to youngest specify --reverse.
 
 .PP
 \fB--compression\fP=auto
-	compression mode (only available for repository format version 2), one of (auto|off|max) (default: $RESTIC_COMPRESSION)
+	compression mode (only available for repository format version 2), one of (auto|off|fastest|better|max) (default: $RESTIC_COMPRESSION)
 
 .PP
 \fB--http-user-agent\fP=""
@@ -165,6 +165,10 @@ output from oldest to youngest specify --reverse.
 .PP
 \fB--retry-lock\fP=0s
 	retry to lock the repository if it is already locked, takes a value like 5m or 2h (default: no retries)
+
+.PP
+\fB--retry-timeout\fP=15m0s
+	retry operation timeout
 
 .PP
 \fB--stuck-request-timeout\fP=5m0s
